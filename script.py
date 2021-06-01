@@ -1,7 +1,6 @@
-    """
+"""
     Credit to harsh8979 For The Original Version of This Program https://github.com/harsh8979/Reversible-Data-Hiding
-    """
-
+"""
 import sys
 from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton,QLabel,QFileDialog,QHBoxLayout
                             ,QDesktopWidget,QVBoxLayout, QSizePolicy)
