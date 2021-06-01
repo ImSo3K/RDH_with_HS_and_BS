@@ -18,10 +18,9 @@ Have `python 3.6.x` and up installed and `pip` or any other python package manag
 <br/>
 
 3. Run the program.
-<br/>
 
 ## Acknowledgements
-To [harsh8979](https://github.com/harsh8979) - the original creator if this project.
+To [harsh8979](https://github.com/harsh8979) - the original creator of this project.
 
 ## Authors
 ___Sharon Yaroshetsky___
