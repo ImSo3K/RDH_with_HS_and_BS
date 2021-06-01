@@ -1,4 +1,4 @@
-# Reversible-Data-Hiding
+# RDH_with_HS_and_BS
 
 ## Overview
 A Reverseble Data Hiding method using Histogram Shifting and Bit-Place Slicing.
