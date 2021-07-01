@@ -2,6 +2,7 @@
     Credit to harsh8979 For The Original Version of This Program https://github.com/harsh8979/Reversible-Data-Hiding
 """
 import sys
+from lsb import LSBSteg,bitplaneslice
 from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton,QLabel,QFileDialog,QHBoxLayout
                             ,QDesktopWidget,QVBoxLayout, QSizePolicy)
 from PyQt5.QtGui import QPixmap
@@ -162,68 +163,6 @@ class App(QWidget):
             cv2.imwrite('./temp/shift.png',temp)
             self.g2.plot(x=x,y=frequency,color='lime',title=('after histogram shifting\n'+'psnr='+str(round(Psnr(self.loc1,'./temp/shift.png'),4))))
             self.image2.setPixmap(QPixmap('./temp/shift.png').scaled(640, 360, Qt.IgnoreAspectRatio, Qt.FastTransformation))
-        else:
-            im = Image.open(self.loc1)
-            pix = im.load()
-            height,width=im.size # Get the width and hight of the image for iterating over
-            
-            maxp=self.maxp
-            maxp2=self.maxp2
-            bstring=''
-            for i in range(self.size):
-                for j in range(self.size):
-                    if(self.in_wm[i][j]):
-                        bstring+='1'
-                    else:
-                        bstring+='0'
-         
-            
-            #histogram shifting
-            maxp2-=self.flag
-            if(maxp<maxp2):
-                for i in range(height):
-                    for j in range(width):
-                        if(pix[i,j]<maxp2 and pix[i,j]>maxp):
-                            pix[i,j]+=1
-            else:
-                for i in range(height):
-                    for j in range(width):
-                        if(pix[i,j]>maxp2 and pix[i,j]<maxp):
-                            pix[i,j]-=1
-            maxp2+=self.flag
-                
-            #writing binary data into image
-            k=0
-            for i in range(height):
-                for j in range(width):
-                    if(pix[i,j]==maxp and k<len(bstring)):
-                        if(bstring[k]=='1' and maxp2>maxp):
-                            pix[i,j]+=1
-                        elif(bstring[k]=='1' and maxp2<maxp):
-                            pix[i,j]-=1
-                        k+=1
-                        
-            #recalculating frequency
-            frequency=list()
-            x=list()
-            for i in range(256):
-                frequency.append(0)
-                x.append(i)
-            for i in range(height):
-                for j in range(width):
-                    frequency[pix[i,j]]+=1
-            
-            
-            self.maxp=maxp
-            self.maxp2=maxp2            
-            
-            
-            #saving the image
-            im.save('./temp/embeded.png')
-            
-            psnr=cv2.PSNR(cv2.imread(self.loc1),cv2.imread('./temp/embeded.png'))
-            psnr=round(psnr,4)
-            self.g3.plot(x=x,y=frequency,color='lime',title=('after writing data    '+'psnr='+str(round(Psnr(self.loc1,'./temp/embeded.png'),4))))
         
 #image output
     def out_img(self,address='./temp/embeded.png'):
@@ -299,17 +238,7 @@ class App(QWidget):
             self.loc1='./temp/gray_img.png'
             cv2.imwrite(self.loc1,img)
             self.in_img()
-            
-            
-    def on_click2(self):
-        if self.loc1!='':
-            fname = QFileDialog.getOpenFileName(self, 'Open file', './')
-            
-            if fname[0]:
-                self.black_and_white(input_image_path=fname[0])
-                self.out_img()
-                self.wm2.setPixmap(QPixmap('./temp/ex_wm.png'))
-                self.image4.setPixmap(QPixmap('./temp/restored.png').scaled(280, 180, Qt.IgnoreAspectRatio, Qt.FastTransformation))
+            LSBSteg.encrypt_RSA(message)
             
             
 #driver function            
@@ -382,6 +311,7 @@ class App(QWidget):
 
 
 if __name__ == '__main__':
+    message = input('enter your message: ').encode('utf8')
     app = QApplication(sys.argv)
     ex = App()
     sys.exit(app.exec_())
