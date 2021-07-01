@@ -21,7 +21,6 @@ Have `python 3.6.x` and up installed and `pip` or any other python package manag
 
 ## Acknowledgements
 To [harsh8979](https://github.com/harsh8979) - the original creator of this project.
-To [amritk49](https://github.com/amritk49) - the creator of RSA encryption with steganography.
 
 ## Authors
 ___Sharon Yaroshetsky___
