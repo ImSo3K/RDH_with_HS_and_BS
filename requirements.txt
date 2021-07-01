@@ -3,3 +3,4 @@ matplotlib
 opencv-python
 Pillow
 numpy
+docopt
